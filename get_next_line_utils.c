@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:57:18 by mehmeyil          #+#    #+#             */
-/*   Updated: 2023/10/03 10:44:57 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:30:47 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ char	*ft_secondline(char *secondline)
 	return (ptr);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	char *s1 = "Hello blabla";
 	char *s2 = "blabla";
@@ -153,4 +153,4 @@ int	main(void)
 	//free(s1);
 
 	return (0);
-}
+}*/
