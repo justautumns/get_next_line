@@ -6,7 +6,7 @@
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:57:18 by mehmeyil          #+#    #+#             */
-/*   Updated: 2023/10/02 16:24:12 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2023/10/03 10:44:57 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,75 @@ char	*ft_strchr(char *s, int c)
 	}
 	return (0);
 }
+
+char	*ft_firstline(char *firstline)
+{
+	int		z;
+	int		i;
+	char	*ptr;
+
+	z = 0;
+	if (!firstline)
+		return (NULL);
+	while (firstline[z] && firstline[z] != '\n')
+		z++;
+	ptr = (char *) malloc (sizeof(char) * (z + 2));
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (i < z + 1)
+	{
+		ptr[i] = firstline[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
+
+char	*ft_secondline(char *secondline)
+{
+	int		k;
+	int		l;
+	char	*ptr;
+	size_t	len;
+
+	k = 0;
+	while (secondline[k] && secondline[k] != '\n')
+		k++;
+	if (!secondline[k])
+		free(secondline);
+		return (NULL);
+	len = ft_strlen(secondline);
+	ptr = (char *) malloc(sizeof(char) * (len - k + 1));
+	if (!ptr)
+		return (NULL);
+	k++;
+	l = 0;
+	while (secondline[k])
+	{
+		ptr[l++] = secondline[k++];
+	}
+	ptr[l] = '\0';
+	free(secondline);
+	return (ptr);
+}
+
 int	main(void)
 {
 	char *s1 = "Hello blabla";
 	char *s2 = "blabla";
 	int m = ' ';
 	char *ema;
+	char deneme[] = "hello world         \n";
+	char deneme1[] = "deneme yapiyorum \n deneme deneme";
 
 	// ema = ft_strjoin(s1, s2);
 	// printf("%ld\n", ft_strlen(s1));
 	// printf("%s\n", ema);
 	// free(ema);
-	printf("%s\n", ft_strchr(s1, m));
+	//printf("%s\n", ft_strchr(s1, m));
+	printf("%s\n", ft_firstline(deneme));
+	//free(s1);
 
 	return (0);
 }
