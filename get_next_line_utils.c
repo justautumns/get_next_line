@@ -5,82 +5,65 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/28 16:57:18 by mehmeyil          #+#    #+#             */
-/*   Updated: 2023/10/03 16:30:47 by mehmeyil         ###   ########.fr       */
+/*   Created: 2023/10/01 14:01:17 by mehmeyil          #+#    #+#             */
+/*   Updated: 2023/10/12 20:22:48 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
+
 size_t	ft_strlen(char *str)
 {
 	size_t	m;
 
 	m = 0;
-	if(!str)
+	if (!str)
 		return (0);
 	while (str[m] != '\0')
 		m++;
 	return (m);
 }
 
-char	*ft_strjoin(char *string1, char *string2)
+char	*ft_strjoin(char *str1, char *str2)
 {
-	size_t	n;
-	size_t	k;
+	int		k;
+	int		m;
 	char	*ptr;
-	size_t	len;
 
-	if (!string1)
+	if (!str1)
 	{
-		string1 = (char *) malloc(1 * sizeof(char));
-		if (!string1)
+		str1 = (char *) malloc(sizeof(char) * 1);
+		if (!str1 || !str2)
 			return (NULL);
-		string1[0] = '\0';
+		str1[0] = '\0';
 	}
-	if (!string1 || !string2)
-		return (NULL);
-	len = ft_strlen(string1) + ft_strlen(string2) + 1;
-	ptr = malloc (sizeof(char) * len);
+	ptr = (char *) malloc (sizeof(char) * (ft_strlen(str1) + ft_strlen(str2) + 1));
 	if (!ptr)
 		return (NULL);
-	n = 0;
-	k = 0;
-	if (string1)
-	{
-		while (string1[n] != '\0')
-		{
-			ptr[n] = string1[n];
-			n++;
-		}
-	}
-	while (string2[k] != '\0')
-	{
-		ptr[n] = string2[k];
-		n++;
-		k++;
-	}
-	ptr[len - 1] = '\0';
-	free(string1);
+	k = -1;
+	m = 0;
+	while (str1[++k])
+		ptr[k] = str1[k];
+	while (str2[m])
+		ptr[k++] = str2[m++];
+	ptr[k] = '\0';
+	free(str1);
 	return (ptr);
 }
 
-char	*ft_strchr(char *s, int c)
+int	ft_strchr(char *s, int c)
 {
 	int	i;
 
 	i = 0;
 	if (!s)
-		return (NULL);
-	if (!c)
-		return ((char *)s);
-	while (s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	return (0);
+		return (0);
+	while (s[i] != (unsigned char)c && s[i] != '\0')
+		i++;
+	if (s[i] == (unsigned char)c)
+		return (1);
+	else
+		return (0);
 }
 
 char	*ft_firstline(char *firstline)
@@ -90,9 +73,9 @@ char	*ft_firstline(char *firstline)
 	char	*ptr;
 
 	z = 0;
-	if (!firstline)
+	if (firstline[z] == '\0')
 		return (NULL);
-	while (firstline[z] && firstline[z] != '\n')
+	while (firstline[z] != '\0' && firstline[z] != '\n')
 		z++;
 	ptr = (char *) malloc (sizeof(char) * (z + 2));
 	if (!ptr)
@@ -110,27 +93,28 @@ char	*ft_firstline(char *firstline)
 char	*ft_secondline(char *secondline)
 {
 	int		k;
-	int		l;
+	int		m;
 	char	*ptr;
-	size_t	len;
 
 	k = 0;
-	while (secondline[k] && secondline[k] != '\n')
-		k++;
-	if (!secondline[k])
+	if (secondline[k] == '\0')
+	{
 		free(secondline);
 		return (NULL);
-	len = ft_strlen(secondline);
-	ptr = (char *) malloc(sizeof(char) * (len - k + 1));
+	}
+	while (secondline[k] != '\0' && secondline[k] != '\n')
+		k++;
+	ptr = (char *) malloc(sizeof(char) * (ft_strlen(secondline) + 1));
 	if (!ptr)
 		return (NULL);
-	k++;
-	l = 0;
-	while (secondline[k])
+	if (secondline[k] == '\n')
+		k++;
+	m = 0;
+	while (secondline[k] != '\0')
 	{
-		ptr[l++] = secondline[k++];
+		ptr[m++] = secondline[k++];
 	}
-	ptr[l] = '\0';
+	ptr[m] = '\0';
 	free(secondline);
 	return (ptr);
 }
@@ -142,14 +126,15 @@ char	*ft_secondline(char *secondline)
 	int m = ' ';
 	char *ema;
 	char deneme[] = "hello world         \n";
-	char deneme1[] = "deneme yapiyorum \n deneme deneme";
+	char deneme1[] = "\n deneme";
 
-	// ema = ft_strjoin(s1, s2);
+	 ema = ft_strjoin(s1, s2);
 	// printf("%ld\n", ft_strlen(s1));
 	// printf("%s\n", ema);
 	// free(ema);
 	//printf("%s\n", ft_strchr(s1, m));
-	printf("%s\n", ft_firstline(deneme));
+	printf("%s\n", ft_secondline(deneme1));
+	//printf("%s\n", ft_firstline(deneme));
 	//free(s1);
 
 	return (0);

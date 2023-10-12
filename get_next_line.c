@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 16:02:48 by mehmeyil          #+#    #+#             */
-/*   Updated: 2023/10/03 17:20:20 by mehmeyil         ###   ########.fr       */
+/*   Created: 2023/10/01 14:37:42 by mehmeyil          #+#    #+#             */
+/*   Updated: 2023/10/12 20:22:46 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ char	*firsread(int fd, char *s)
 	if (!tmp)
 		return (NULL);
 	n = 1;
-	while (!ft_strchr(s, '\n') && n != 0)
+	while (ft_strchr(s, '\n') == 0 && n > 0)
 	{
 		n = read(fd, tmp, BUFFER_SIZE);
 		if (n == -1)
 		{
 			free (tmp);
+			if (s)
+				free(s);
 			return (NULL);
 		}
 		tmp[n] = '\0';
@@ -35,36 +37,44 @@ char	*firsread(int fd, char *s)
 	free (tmp);
 	return (s);
 }
+
 char	*get_next_line(int fd)
 {
 	char			*x;
-	static	char 	*ptr;
+	static char		*ptr;
 
-	if (BUFFER_SIZE <= 0)
-		return (0);
-	if (fd < 0)
-		return (0);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	ptr = firsread(fd, ptr);
-	if (!ptr)
+	if (ptr == NULL)
 		return (NULL);
 	x = ft_firstline(ptr);
 	ptr = ft_secondline(ptr);
-
 	return (x);
 }
-
-int	main(void)
+/*int	main(void)
 {
 	char	*omg;
 	int	n;
-	int k;
+
 
 	n = open("test.txt", O_RDONLY);
-	while ((omg = get_next_line(n)))
-	{
-		printf("%s", omg);
-		free(omg);
-	}
+	omg = get_next_line(n);
+	printf("%s", omg);
+	omg = get_next_line(n);
+	printf("%s", omg);
+	omg = get_next_line(n);
+	printf("%s", omg);
+	omg = get_next_line(n);
+	printf("%s", omg);
+	omg = get_next_line(n);
+	printf("%s", omg);
+	omg = get_next_line(n);
+	printf("%s", omg);
+	omg = get_next_line(n);
+	printf("%s", omg);
+	free(omg);
 	close(n);
 	return (0);
 }
+*/
