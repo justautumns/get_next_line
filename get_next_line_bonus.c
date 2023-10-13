@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mehmeyil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 14:37:42 by mehmeyil          #+#    #+#             */
-/*   Updated: 2023/10/13 20:21:35 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2023/10/13 20:21:19 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*firsread(int fd, char *s)
 {
@@ -41,15 +41,15 @@ static char	*firsread(int fd, char *s)
 char	*get_next_line(int fd)
 {
 	char			*x;
-	static char		*ptr;
+	static char		*ptr[1024];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	ptr = firsread(fd, ptr);
-	if (ptr == NULL)
+	ptr[fd] = firsread(fd, ptr[fd]);
+	if (ptr[fd] == NULL)
 		return (NULL);
-	x = ft_firstline(ptr);
-	ptr = ft_secondline(ptr);
+	x = ft_firstline(ptr[fd]);
+	ptr[fd] = ft_secondline(ptr[fd]);
 	return (x);
 }
 /*int	main(void)
